@@ -1,4 +1,4 @@
-; hello-os
+
 
 CYLS   equ   10               
 

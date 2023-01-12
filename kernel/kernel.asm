@@ -8,6 +8,7 @@ unknownmsg db "Unknown command",0dh,0ah,'$'
 vercmdmsg db "v0.01:Alpha 1",0dh,0ah,'$'
 
 vercom db "ver"
+clscom db "cls"
 start:
 	mov ax,0
 	mov ds,ax
@@ -85,19 +86,35 @@ cmdswitch:
 	mov ah,[vercom+si]
 	mov al,[inputdup+si]
 	cmp al,ah
-	jne .unknowncmd
+	jne .nextcom2
 	inc si
 	loop .nextcom1
 	jmp .ver
+.nextcom2:
+	mov si,0
+	mov cx,3
+.nextcom2s:
+	mov ah,[clscom+si]
+	mov al,[inputdup+si]
+	cmp al,ah
+	jne .unknowncmd
+	inc si
+	loop .nextcom2s
+	jmp .cls
 .unknowncmd:
 	call newline
 	mov si,unknownmsg
 	call print
 	jmp .dealover
-.ver:
+.ver: ;显示版本
 	call newline
 	mov si,vercmdmsg
 	call print
+	jmp .dealover
+.cls: ;清屏
+	mov ah,00h
+	mov al,03h
+	int 10h
 	jmp .dealover
 .dealover:
 	mov si,0
