@@ -17,3 +17,7 @@ No installer
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
+
+#### 注意事项
+
+此系统在Windows开发
